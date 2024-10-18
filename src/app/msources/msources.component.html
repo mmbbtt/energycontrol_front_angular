@@ -1,0 +1,45 @@
+<main id="main" class="main">
+  <div class="pagetitle">
+    <h1>{{ title }}</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a [routerLink]="['/home']">{{ labelHome }}</a>
+        </li>
+      </ol>
+    </nav>
+  </div>
+  <!-- End Page Title -->
+  
+  <section>
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-body">
+            <!--<h5 class="card-title">Datatables</h5>-->
+            <!-- Table with stripped rows -->
+            <table class="table datatable">
+              <thead>
+                <tr>
+                  <th></th>
+                  <th>{{ labelColumnCode }}</th>
+                  <th>{{ labelColumnDesription }}</th>
+                  <th>{{ labelColumnType }}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let ms of msources">
+                  <td><input type="checkbox"></td>
+                  <td>{{ms.code}}</td>
+                  <td>{{ms.description}}</td>
+                  <td>{{ms.type}}</td>
+              </tr>
+              </tbody>
+            </table> 
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+  

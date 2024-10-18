@@ -1,0 +1,60 @@
+<aside id="sidebar" class="sidebar">
+  <ul class="sidebar-nav" id="sidebar-nav">
+    <!-- Cargar factura Naturgy -->
+    <li class="nav-item">
+      <a class="nav-link collapsed" [routerLink]="['/loadBillNaturgy']">
+        <i class="bi bi-upload"></i>
+        <span>{{ labelLoadBillNaturgy }}</span>
+      </a>
+    </li>
+    <!-- Fin Cargar factura Naturgy -->
+
+    <!-- Cargar consumos Efergy E2 -->
+    <li class="nav-item">
+      <a class="nav-link collapsed">
+        <i class="bi bi-upload"></i>
+        <span>{{ labelLoadConsumptionsEE2 }}</span>
+      </a>
+    </li>
+    <!-- Fin Cargar consumos Efergy E2 -->
+
+    <!-- Verificar consumos factura -->
+    <li class="nav-item">
+      <a class="nav-link collapsed">
+        <i class="bi bi-card-checklist"></i>
+        <span>{{ labelCheckBillConsumptions }}</span>
+      </a>
+    </li>
+    <!-- Fin Verificar consumos factura -->
+
+    <!-- Configuración -->
+    <li class="nav-item">
+      <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
+        <i class="bi bi-gear"></i><span>{{labelSettings}}</span><i class="bi bi-chevron-down ms-auto"></i>
+      </a>
+
+      <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+        <li>
+          <a >
+            <i class="bi bi-circle"></i><span>{{labelGenerateDateHours}}</span>
+          </a>
+        </li>
+
+        <li>
+          <a [routerLink]="['/msourcesComponent']">
+            <i class="bi bi-circle"></i><span>{{labelShowMasterSources}}</span>
+          </a>
+        </li>
+
+        <li>
+          <a >
+            <i class="bi bi-circle"></i><span>{{labelShowSources}}</span>
+          </a>
+        </li>
+
+      </ul>
+    </li>
+    <!-- Fin Configuración -->
+
+  </ul>
+</aside>
