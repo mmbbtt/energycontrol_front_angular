@@ -1,9 +1,11 @@
-import { Component, OnInit} from '@angular/core';
-import { MatPaginatorIntl, PageEvent } from '@angular/material/paginator'; 
+import { Component, OnInit, ViewChild, inject} from '@angular/core';
+import { MatPaginator, MatPaginatorIntl  } from '@angular/material/paginator'; 
+import {MatSort, Sort, MatSortModule} from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { MSource } from '../model/msource.model';
 import { EnergyControlApiService} from '../services/energyControlApi.service'
-import { Helper } from '../services/Helper'
 import { MatPaginatorIntlEs } from './matPaginatorIntlEs'
+import {LiveAnnouncer} from '@angular/cdk/a11y';
 
 
 
@@ -12,7 +14,8 @@ import { MatPaginatorIntlEs } from './matPaginatorIntlEs'
   templateUrl: './msources.component.html',
   styleUrl: './msources.component.css',
   providers: [
-    EnergyControlApiService, {provide: MatPaginatorIntl, useClass: MatPaginatorIntlEs}
+    EnergyControlApiService,
+    {provide: MatPaginatorIntl, useClass: MatPaginatorIntlEs}
   ]
 })
 export class MsourcesComponent implements OnInit
@@ -30,7 +33,15 @@ export class MsourcesComponent implements OnInit
 
   //#endregion
 
-  msources: MSource[] = []; //Origen de datos
+  displayedColumns: string[] = ["code", "description", "type"];
+  dataSource: MatTableDataSource<MSource>;
+
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  pageSizeOptions = [1, 2, 10];
+  pageSize = 2;
+
+  private _liveAnnouncer = inject(LiveAnnouncer);
+  @ViewChild(MatSort) sort: MatSort;
 
   constructor(private apiSevice: EnergyControlApiService) { }
 
@@ -38,37 +49,21 @@ export class MsourcesComponent implements OnInit
   {
     this.apiSevice.getMSources().subscribe((response: MSource[]) => 
       { 
-        this.totalItems = this.msources.length;
-
-        this.msources = response;
-        this.totalItems = this.msources.length;
-        this.items = this.getData(this.currentPage, this.pageSize);
+        this.dataSource = new MatTableDataSource<MSource>(response);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
       }); 
   }
 
-  //#region Paginador
-
-  totalItems: number = 0;
-  pageSize: number = 2;
-  currentPage:number = 0;
-  pageSizeOptions = [1, 2, 10];
-  showFirstLastButtons = "showFirstLastButtons";
-
-  items : MSource[] = [];
-
-  getData(currentPage: number, pageSize:number): MSource[]
+  announceSortChange(sortState: Sort)
   {
-    var startIndex: number = Helper.startIndexOfPage(this.currentPage, this.msources.length, this.pageSize);
-
-    return this.msources.slice(startIndex, startIndex + this.pageSize);
+    if (sortState.direction) 
+    {
+      this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
+    } 
+    else 
+    {
+      this._liveAnnouncer.announce('Sorting cleared');
+    }
   }
-
-  pageChanged(event: PageEvent) 
-  {
-    this.pageSize = event.pageSize;
-    this.currentPage = event.pageIndex;
-    this.items = this.getData(this.currentPage, this.pageSize);
-  }
-
-  //#endregion
 }
