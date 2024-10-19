@@ -6,6 +6,7 @@ import { DataTablesModule } from 'angular-datatables';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';  
 import { MatSortModule } from '@angular/material/sort';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -27,7 +28,6 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
     ErrorComponent,
     LoadBillNaturgyComponent,
     MsourcesComponent
- 
   ],
   imports: [
     BrowserModule,
@@ -37,7 +37,8 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
     DataTablesModule,
     MatPaginatorModule,
     MatTableModule,
-    MatSortModule
+    MatSortModule,
+    MatCheckboxModule
   ],
   providers: [
     HttpClient,

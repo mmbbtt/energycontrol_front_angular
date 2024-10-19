@@ -1,11 +1,12 @@
 import { Component, OnInit, ViewChild, inject} from '@angular/core';
 import { MatPaginator, MatPaginatorIntl  } from '@angular/material/paginator'; 
-import {MatSort, Sort, MatSortModule} from '@angular/material/sort';
+import { MatSort, Sort } from '@angular/material/sort';
+import { SelectionModel } from '@angular/cdk/collections';
 import { MatTableDataSource } from '@angular/material/table';
 import { MSource } from '../model/msource.model';
 import { EnergyControlApiService} from '../services/energyControlApi.service'
 import { MatPaginatorIntlEs } from './matPaginatorIntlEs'
-import {LiveAnnouncer} from '@angular/cdk/a11y';
+import { LiveAnnouncer } from '@angular/cdk/a11y';
 
 
 
@@ -33,27 +34,23 @@ export class MsourcesComponent implements OnInit
 
   //#endregion
 
-  displayedColumns: string[] = ["code", "description", "type"];
+  displayedColumns: string[] = ["select", "code", "description", "type"];
   dataSource: MatTableDataSource<MSource>;
+  
+  constructor(private apiSevice: EnergyControlApiService) { }
+
+  //#region Paginación
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   pageSizeOptions = [1, 2, 10];
   pageSize = 2;
 
+  //#endregion
+
+  //#region Ordenación de columnas
+
   private _liveAnnouncer = inject(LiveAnnouncer);
   @ViewChild(MatSort) sort: MatSort;
-
-  constructor(private apiSevice: EnergyControlApiService) { }
-
-  ngOnInit(): void 
-  {
-    this.apiSevice.getMSources().subscribe((response: MSource[]) => 
-      { 
-        this.dataSource = new MatTableDataSource<MSource>(response);
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
-      }); 
-  }
 
   announceSortChange(sortState: Sort)
   {
@@ -65,5 +62,64 @@ export class MsourcesComponent implements OnInit
     {
       this._liveAnnouncer.announce('Sorting cleared');
     }
+  }
+
+  //#endregion
+
+  //#region Selección de filas
+
+  selection = new SelectionModel<MSource>(true, []);
+
+  isAllSelected() 
+  {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.dataSource.data.length;
+    return numSelected === numRows;
+  }
+
+  /**
+   * Selecciona todas las filas, en el caso de que no lo estén todas.
+   * Si ya están todas seleccionadas, las deslecciona.
+   */
+  masterToggle() 
+  {
+    this.isAllSelected() ? this.selection.clear() : this.dataSource.data.forEach(row => this.selection.select(row));
+  }
+
+
+  //#endregion
+
+  //#region Fila clicada
+
+  /*
+  clickedRow: MSource;
+
+  onClickedRow(row: MSource)
+  {
+    if(row == this.clickedRow)
+    {
+      this.clickedRow = {} as MSource;
+    }
+    else
+    {
+      this.clickedRow = row;
+    }
+  }
+
+  isRowClicked(row: MSource)
+  {
+    return this.clickedRow == row;
+  }
+  */
+  //#endregion
+
+  ngOnInit(): void 
+  {
+    this.apiSevice.getMSources().subscribe((response: MSource[]) => 
+      { 
+        this.dataSource = new MatTableDataSource<MSource>(response);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+      }); 
   }
 }
