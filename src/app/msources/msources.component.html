@@ -17,6 +17,17 @@
         <div class="card">
           <div class="card-body">
             <!--<h5 class="card-title">Datatables</h5>-->
+            <mat-paginator 
+              [length]='totalItems' 
+              [pageSize]='pageSize' 
+              [pageIndex]='currentPage' 
+              [pageSizeOptions]='pageSizeOptions'
+              [showFirstLastButtons]='showFirstLastButtons'
+              aria-label="Select page"
+              (page)='pageChanged($event)'
+              
+              >
+            </mat-paginator>
             <!-- Table with stripped rows -->
             <table class="table datatable">
               <thead>
@@ -28,7 +39,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let ms of msources">
+                <tr *ngFor="let ms of items">
                   <td><input type="checkbox"></td>
                   <td>{{ms.code}}</td>
                   <td>{{ms.description}}</td>
@@ -36,6 +47,7 @@
               </tr>
               </tbody>
             </table> 
+
           </div>
         </div>
       </div>
