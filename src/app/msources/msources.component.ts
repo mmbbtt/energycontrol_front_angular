@@ -3,10 +3,13 @@ import { MatPaginator, MatPaginatorIntl  } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatTableDataSource } from '@angular/material/table';
+import { LiveAnnouncer } from '@angular/cdk/a11y';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+
 import { MSource } from '../model/msource.model';
 import { EnergyControlApiService} from '../services/energyControlApi.service'
 import { MatPaginatorIntlEs } from './matPaginatorIntlEs'
-import { LiveAnnouncer } from '@angular/cdk/a11y';
+
 
 
 
@@ -23,14 +26,17 @@ export class MsourcesComponent implements OnInit
 {
   //#region Etiquetas usadas en la plantilla HTML
 
-  title: string = "Maestro de orígenes de datos"
-  description: string = "Un <code>MSource</code> es un tipo de origen de datos de consumo de energía eléctrica. \
+  labelPageTitle: string = "Maestro de orígenes de datos"
+  labelCardTitle = "Listado de MSources"
+  innerHtmlCardDescription: string = "Un <code>MSource</code> es un tipo de origen de datos de consumo de energía eléctrica. \
     Se usa para saber de donde se han obtenido los consumos, por ejemplo, de un medidor de energía, o suministrados por la compañía eléctrica.\
     <br> ";
   labelHome: string = "Inicio";
   labelColumnCode: string = "Código";
   labelColumnDesription: string = "Descripción";
   labelColumnType: string = "Tipo";
+  labelColumnDetails: string = "Detalles";
+  labelColumnDelete: String = "Borrar";
   labelRowsPerPage: string = "Filas por página";
   labelSearchPlaceHolder: string = "Buscar ...";
   labelSearchTitle: string = "Buscar en la tabla";
@@ -38,8 +44,9 @@ export class MsourcesComponent implements OnInit
 
   //#endregion
 
-  displayedColumns: string[] = ["select", "code", "description", "type"];
+  displayedColumns: string[] = ["select", "code", "description", "type", "details", "delete"];
   dataSource: MatTableDataSource<MSource>;
+  readonly confirmDialog = inject(MatDialog);
   
   constructor(private apiSevice: EnergyControlApiService) { }
 
@@ -153,4 +160,31 @@ export class MsourcesComponent implements OnInit
         this.dataSource.sort = this.sort;
       }); 
   }
+
+  //#region Botón de fila detalle
+
+  detailsIcon: String = "view_headline";
+  redirectToDetails = (mSourceCode: string) => 
+  {
+    
+  }
+
+  //#endregion
+
+  //#region Botón de fila borrar
+
+  deleteIcon: String = "delete";
+  redirectToDelete = (mSourceCode: string) => 
+  {
+    const cd = this.confirmDialog.open(
+      ConfirmationDialog,
+      {
+        data: {name: "Borrar MSource"}
+      }
+    );
+  }
+
+  //#endregion
 }
+
+
