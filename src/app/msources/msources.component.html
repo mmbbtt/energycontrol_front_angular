@@ -16,8 +16,23 @@
       <div class="col-lg-12">
         <div class="card">
           <div class="card-body">
-            <!--<h5 class="card-title">Datatables</h5>-->
-            
+            <h5 class="card-title">MSource</h5>
+            <span [innerHTML]="description"></span>
+
+            <div class="datatablesearch">
+              <mat-form-field >
+                <mat-label>{{labelSearchTitle}}</mat-label>
+                <input 
+                  matInput 
+                  type="text" 
+                  placeholder={{labelSearchPlaceHolder}} 
+                  [(ngModel)]="searchValue"
+                  (keydown.enter)="onDoFilter()"
+                  >
+                <mat-icon matSuffix (click)="onDoFilter()">{{searchIcon}}</mat-icon>
+              </mat-form-field>
+            </div>
+
             <table 
               mat-table [dataSource]='dataSource' 
               matSort (matSortChange)='announceSortChange($event)'

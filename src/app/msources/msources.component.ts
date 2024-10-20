@@ -24,6 +24,9 @@ export class MsourcesComponent implements OnInit
   //#region Etiquetas usadas en la plantilla HTML
 
   title: string = "Maestro de orígenes de datos"
+  description: string = "Un <code>MSource</code> es un tipo de origen de datos de consumo de energía eléctrica. \
+    Se usa para saber de donde se han obtenido los consumos, por ejemplo, de un medidor de energía, o suministrados por la compañía eléctrica.\
+    <br> ";
   labelHome: string = "Inicio";
   labelColumnCode: string = "Código";
   labelColumnDesription: string = "Descripción";
@@ -31,6 +34,7 @@ export class MsourcesComponent implements OnInit
   labelRowsPerPage: string = "Filas por página";
   labelSearchPlaceHolder: string = "Buscar ...";
   labelSearchTitle: string = "Buscar en la tabla";
+
 
   //#endregion
 
@@ -47,7 +51,7 @@ export class MsourcesComponent implements OnInit
 
   //#endregion
 
-  //#region Ordenación de columnas
+  //#region Ordenación
 
   private _liveAnnouncer = inject(LiveAnnouncer);
   @ViewChild(MatSort) sort: MatSort;
@@ -111,6 +115,33 @@ export class MsourcesComponent implements OnInit
     return this.clickedRow == row;
   }
   */
+  //#endregion
+
+  //#region Filtrado
+
+  isFiltered: boolean = false;
+  searchValue: string = "";
+  searchIcon: string = "search"
+
+  onDoFilter()
+  {
+    if(!this.isFiltered && this.searchValue)
+    {
+      this.isFiltered = true;
+      this.searchIcon = "search_off";
+
+      this.dataSource.filter = this.searchValue.trim().toLocaleLowerCase();
+    }
+    else
+    {
+      this.isFiltered = false;
+      this.searchIcon = "search";
+      this.searchValue = "";
+      this.dataSource.filter = "";
+    }
+  }
+
+
   //#endregion
 
   ngOnInit(): void 
