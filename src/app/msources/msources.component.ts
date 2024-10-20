@@ -176,12 +176,7 @@ export class MsourcesComponent implements OnInit
   deleteIcon: String = "delete";
   redirectToDelete = (mSourceCode: string) => 
   {
-    const cd = this.confirmDialog.open(
-      ConfirmationDialog,
-      {
-        data: {name: "Borrar MSource"}
-      }
-    );
+    
   }
 
   //#endregion
