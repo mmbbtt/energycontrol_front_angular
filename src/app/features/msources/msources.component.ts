@@ -6,12 +6,10 @@ import { MatTableDataSource } from '@angular/material/table';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 
-import { MSource } from '../model/msource.model';
-import { EnergyControlApiService} from '../services/energyControlApi.service'
-import { MatPaginatorIntlEs } from './matPaginatorIntlEs'
-
-
-
+import { MSource } from '../../core/model/msource.model';
+import { EnergyControlApiService} from '../../core/services/energyControlApi.service';
+import { MatPaginatorIntlEs } from './matPaginatorIntlEs';
+import { ConfirmationDialogComponent } from '../../shared/confirmation-dialog/confirmation-dialog.component';
 
 @Component({
   selector: 'app-msources',
@@ -176,7 +174,11 @@ export class MsourcesComponent implements OnInit
   deleteIcon: String = "delete";
   redirectToDelete = (mSourceCode: string) => 
   {
+    const dr = this.confirmDialog.open(ConfirmationDialogComponent);
     
+    dr.afterClosed().subscribe(result => {
+      console.log(result);
+    });
   }
 
   //#endregion

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ECollectionMethod, ICollectionMethod } from '../model/collectionMethod.model';
+import { ECollectionMethod, ICollectionMethod } from '../../core/model/collectionMethod.model';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({

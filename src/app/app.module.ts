@@ -13,13 +13,14 @@ import { MatDialogModule } from '@angular/material/dialog';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HeaderComponent } from './header/header.component';
-import { AsideComponent } from './aside/aside.component';
-import { HomeComponent } from './home/home.component';
-import { ErrorComponent } from './error/error.component';
-import { LoadBillNaturgyComponent } from './load-bill-naturgy/load-bill-naturgy.component';
-import { MsourcesComponent } from './msources/msources.component';
+import { HeaderComponent } from './layout/header/header.component';
+import { AsideComponent } from './layout/aside/aside.component';
+import { HomeComponent } from './layout/home/home.component';
+import { ErrorComponent } from './layout/error/error.component';
+import { LoadBillNaturgyComponent } from './features/load-bill-naturgy/load-bill-naturgy.component';
+import { MsourcesComponent } from './features/msources/msources.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { ConfirmationDialogComponent } from './shared/confirmation-dialog/confirmation-dialog.component';
 
 
 @NgModule({
@@ -30,7 +31,9 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
     HomeComponent,
     ErrorComponent,
     LoadBillNaturgyComponent,
-    MsourcesComponent
+    MsourcesComponent,
+    ConfirmationDialogComponent,
+    ConfirmationDialogComponent
   ],
   imports: [
     BrowserModule,
